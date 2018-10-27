@@ -1,5 +1,5 @@
 # Configuración del servidor
-1. Update y upgrade del servidor: 
+1. Update y upgrade del servidor : 
     - `apt-get update`
     - `apt-get upgrade`
 

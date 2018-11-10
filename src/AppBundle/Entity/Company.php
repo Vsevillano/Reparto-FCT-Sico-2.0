@@ -29,7 +29,7 @@ class Company
     private $name;
 
     /**
-     * @Assert\Regex("/^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/i")
+     * @Assert\Regex("/^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])|(\d{8})([A-Z])|[XYZ]\d{7,8}[A-Z]$/i")
      * @Assert\NotBlank()
      * @ORM\Column(name="cif", type="string", nullable=false, unique=true)
      */

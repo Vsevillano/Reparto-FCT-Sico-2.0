@@ -6,6 +6,7 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Student;
 use AppBundle\Services\StudentsHelper;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,6 +31,12 @@ class StudentType extends AbstractType
                 'choices' => $options["convocatories"],
                 'data' => $options["convocatory_selected"]
                 ))
+            ->add('pi_exento', CheckboxType::class, array(
+                'label' => false
+            ))
+            ->add('fct_exento', CheckboxType::class, array(
+                'label' => false
+            ))
             ->add('save', SubmitType::class, array('label' => 'Aceptar','attr' => ['class' => 'w-100 waves-effect waves-light btn']));
     }
 

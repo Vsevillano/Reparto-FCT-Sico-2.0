@@ -56,6 +56,16 @@ class Student
     private $convocatory;
 
     /**
+     * @ORM\Column(name="piexento", type="boolean", nullable=false)
+     */
+    private $piexento;
+
+    /**
+     * @ORM\Column(name="fctexento", type="boolean", nullable=false)
+     */
+    private $fctexento;
+
+    /**
      * Get id
      *
      * @return int
@@ -112,6 +122,56 @@ class Student
     {
         return $this->last_name;
     }
+
+    /**
+     * Get piExento
+     *
+     * @return int
+     */
+    public function getPiExento()
+    {
+        return $this->piexento;
+    }
+
+    /**
+     * Set piExento
+     *
+     * @param int $piExento
+     *
+     * @return Student
+     */
+    public function setPiExento($piExento)
+    {
+        $this->piexento = $piExento;
+
+        return $this;
+    }
+
+    /**
+     * Get fctexento
+     *
+     * @return int
+     */
+    public function getFctExento()
+    {
+        return $this->fctexento;
+    }
+
+    /**
+     * Set fctExento
+     *
+     * @param int $fctExento
+     *
+     * @return Student
+     */
+    public function setFctExento($fctExento)
+    {
+        $this->fctexento = $fctExento;
+
+        return $this;
+    }
+
+    
 
     /**
      * Constructor

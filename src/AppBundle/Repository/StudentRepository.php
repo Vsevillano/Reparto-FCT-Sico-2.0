@@ -20,37 +20,78 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
         return $this->findBy(Array("convocatory" => $convocatory));
     }
 
+    public function getAllStudentsConvocatoryExento($convocatory, $type)
+    {
+        if ($type == 'company'){
+            $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select('t')
+            ->from('AppBundle:Student', 't')
+            ->where('t.convocatory = :convocatory_id')
+            ->andwhere('t.fctexento = 0')
+            ->setParameter('convocatory_id', $convocatory);
+        }else{
+             $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select('t')
+            ->from('AppBundle:Student', 't')
+            ->where('t.convocatory = :convocatory_id')
+            ->andwhere('t.piexento = 0')
+            ->setParameter('convocatory_id', $convocatory);
+        }
+       
+        return $qb->getQuery()->getResult();
+    }
+
     public function getAllStudentsNoDistribution($convocatory, $type)
     {
+        $control= "";
         $table = "";
-        if ($type == 'company')
+        if ($type == 'company'){
             $table = 'AppBundle:Distribution_company';
-        else
+            $control ="1";
+        }else{
             $table = 'AppBundle:Distribution_project';
+            $control ="2";
+        }
 
         $q2b = $this->getEntityManager()->createQueryBuilder()
-            ->select('st.id')
-            ->from($table, 'd')
-            ->join('d.student', 'st');
+                    ->select('st.id')
+                    ->from($table, 'd')
+                    ->join('d.student', 'st');
+
 
         $arrayIds = $this->arrayIdsToString($q2b->getQuery()->getArrayResult());
 
         if (count($arrayIds) > 0)
-            return $this->getStudentsNotIN($convocatory, $arrayIds);
+            return $this->getStudentsNotIN($convocatory, $arrayIds,$control);
         return $this->getAllStudentsConvocatory($convocatory);
     }
 
-    public function getStudentsNotIN($convocatory, $arrayIds)
+    public function getStudentsNotIN($convocatory, $arrayIds,$control)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder()
+        if ($control== "1") {
+            $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('t')
             ->from('AppBundle:Student', 't')
             ->where('t.convocatory = :convocatory_id')
+            ->andwhere('t.fctexento = 0')
             ->andWhere('t.id NOT IN(' . implode(",", $arrayIds) . ')')
             ->setParameter('convocatory_id', $convocatory);
-
+        }else{
+            $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select('t')
+            ->from('AppBundle:Student', 't')
+            ->where('t.convocatory = :convocatory_id')
+            ->andwhere('t.piexento = 0')
+            ->andWhere('t.id NOT IN(' . implode(",", $arrayIds) . ')')
+            ->setParameter('convocatory_id', $convocatory);
+        }
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getStudentsNotINExento($convocatory, $arrayIds,$control)
+    {
+        
     }
 
 

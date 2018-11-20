@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-11-2018 a las 12:01:40
+-- Tiempo de generación: 20-11-2018 a las 20:37:59
 -- Versión del servidor: 5.7.23-0ubuntu0.16.04.1
 -- Versión de PHP: 7.0.32-0ubuntu0.16.04.1
 
@@ -66,7 +66,9 @@ INSERT INTO `Company` (`id`, `name`, `cif`, `phone`, `email`) VALUES
 (26, 'Ayuntamiento El carpio', 'P1401800F', '680426448', 'informatica@ayunelcarpio.es'),
 (27, 'VorticeSoft', '74923943V', '687994192', 'desarrollo@vorticesoft.com'),
 (28, 'SOLUCIONES TECNOLOGICAS EPL, S.L.', 'B90224437', '625484414', 'dblasco@elprimerodelalista.es'),
-(29, 'Uniges 3 SL', 'B14699276', '684455847', 'ana@uniges3.net');
+(29, 'Uniges 3 SL', 'B14699276', '684455847', 'ana@uniges3.net'),
+(30, 'Enooby Spain S.L.U.', 'B56019110', '617945222', 'info@enooby.com'),
+(31, 'Asociación Cultural y Tecnológica Ingenia XXI', 'G56004948', '677382966', 'ilgarcia@uco.es');
 
 -- --------------------------------------------------------
 
@@ -155,8 +157,8 @@ CREATE TABLE `Cycle` (
 --
 
 INSERT INTO `Cycle` (`id`, `name`, `initials`, `titularHours1`, `desdobleHours1`, `titularHours2`, `desdobleHours2`) VALUES
-(1, 'Desarrollo de Aplicaciones Web', 'DAW', 27, 12, 0, 0),
-(2, 'Administracion de Sistemas Informáticos en Red', 'ASIR', 27, 10, 0, 0);
+(1, 'Desarrollo de Aplicaciones Web', 'DAW', 27, 12, 26, 0),
+(2, 'Administracion de Sistemas Informáticos en Red', 'ASIR', 27, 10, 26, 0);
 
 -- --------------------------------------------------------
 
@@ -247,7 +249,7 @@ INSERT INTO `Distribution_module_teacher` (`id`, `module_id`, `user_id`, `hours`
 (13, 13, 2, 3, 1, '1DAW-A', 1),
 (14, 18, 8, 3, 0, '2DAW-A', 1),
 (15, 16, 2, 6, 0, '2DAW-A', 1),
-(16, 29, 3, 3, 0, '2DAW-A', 1),
+(16, 29, 3, 6, 0, '2DAW-A', 1),
 (17, 17, 4, 8, 0, '2DAW-A', 1),
 (18, 30, 4, 3, 0, '2DAW-A', 1),
 (19, 21, 3, 3, 0, '1ASIR-A', 1),
@@ -262,7 +264,8 @@ INSERT INTO `Distribution_module_teacher` (`id`, `module_id`, `user_id`, `hours`
 (28, 26, 7, 4, 0, '2ASIR-A', 1),
 (29, 25, 5, 6, 0, '2ASIR-A', 1),
 (30, 24, 8, 6, 0, '2ASIR-A', 1),
-(31, 28, 5, 4, 0, '2ASIR-A', 1);
+(31, 28, 5, 4, 0, '2ASIR-A', 1),
+(32, 31, 10, 3, 0, '2ASIR-A', 1);
 
 -- --------------------------------------------------------
 
@@ -413,8 +416,9 @@ INSERT INTO `Module` (`id`, `course_cycle_id`, `name`, `initials`, `hours`, `hou
 (26, 4, 'Implantación de aplicaciones web', 'IAW', 4, 2),
 (27, 4, 'Administración de sistemas gestores de bases de datos', 'SGBD', 3, 0),
 (28, 4, 'Seguridad y alta disponibilidad', 'SAD', 4, 0),
-(29, 2, 'Diseño de Interfaces Web', 'DIWEB', 3, 0),
-(30, 2, 'Horas de libre configuracion', 'HLC', 3, 0);
+(29, 2, 'Diseño de Interfaces Web', 'DIWEB', 6, 0),
+(30, 2, 'Horas de libre configuracion', 'HLC', 3, 0),
+(31, 4, 'Horas de libre configuracion', 'HLC', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -501,8 +505,6 @@ CREATE TABLE `Request_company` (
 
 INSERT INTO `Request_company` (`id`, `school_year_id`, `name_company`, `cif`, `headquarters_of_work`, `headquarters_principal`, `contact_person`, `email`, `phone`, `manager`, `nif_manager`, `tutor`, `nif_tutor`, `number_of_daw`, `number_of_asir`, `type_of_work_day`, `tasks_to_be_done`, `observations`) VALUES
 (313, 2, 'MYE WEB DESING CORDOBA S.L. (Salmorejo Software)\r\n', 'B14993448\r\n', 'Córdoba\r\n', 'No se ha proporcionado\r\n', 'Eloy\r\n', ' eloy@salmorejosoftware.com\r\n', '665644518\r\n', 'Eloy González Jordano\r\n', '30422958F\r\n', 'Víctor Parra\r\n', '50614787K\r\n', 1, NULL, 'Jornada continua\r\n', 'Desarrollo de aplicaciones y páginas web\r\n', 'SIN OBSERVACIONES\r\n'),
-(679, 1, 'Enooby Spain S.L.U.', 'B56019110', 'Córdoba', 'No se ha proporcionado', 'Ana María Cañero López', 'info@enooby.com', '617945222', 'Ana María Cañero López', '01234567-M', 'Ana María Cañero López', '30951138S', 1, 0, 'Jornada continua', '- Desarrollo de aplicaciones web conectadas a la API de Google (Google Apps)\n- Desarrollo de sistemas específicos para educación (Chrome OS, Raspberry, pantallas táctiles, chromecast...)\n- Adaptación de sitios web internos', 'Nos gustaría recibir un alumno inquieto y motivado tecnológicamente, y a ser posible, que hayan tenido algún contacto con el uso de la API de Google.'),
-(680, 1, 'Asociación Cultural y Tecnológica Ingenia XXI', 'G56004948', 'Córdoba', 'No se ha proporcionado', 'Isabel López García', 'ilgarcia@uco.es', '677382966', 'Isabel López García', '01234567-M', 'Isabel López García', '74662535G', 1, 0, 'Jornada continua', 'Revisión de la actual página web y actualización de contenidos. Elaboración de webs adscritas a la web principal. Conexión con redes sociales.', 'Ya hemos participado una vez en este programa y estamos muy satisfechos con la experiencia y con la profesora tutora Mª Lourdes. Esperamos poder repetir próximamente.'),
 (681, 1, 'UMITEL soluciones informaticas sl', 'b14977581', 'cordoba', 'No se ha proporcionado', 'alberto cano', 'alberto@umitel.es', '661506112', 'alberto cano', '01234567-M', 'alberto cano', '30978870d', 1, 1, 'Jornada continua', 'servicio de soporte a empresas (problemas de servidores , desarrollo de app, paginas web, averías de equipos, instalaciones de red  y radionlaces..)', NULL),
 (682, 1, 'Via Activa SL', 'B14661821', 'Córdoba', 'No se ha proporcionado', 'Pedro Castro Jimenez', 'info@viaactiva.es', '957761892', 'Pedro Castro Jimenez(30509280X)', '01234567-M', 'Eva Mª Rabasco Bravo', '29485211Q', 1, 0, 'Jornada continua', 'Manejo de Wordpress y redes sociales', 'A ser posible que tambien tenga conocimientos de Prestashop aunque no es determinante.'),
 (683, 1, 'Gestaweb 2020, S.L.', 'B14970750', 'Córdoba', 'No se ha proporcionado', 'Juan Antonio Serrano', 'juan@electrocosto.com', '957404686', 'Verónica Jurado Márquez(44371961Q)', '01234567-M', 'Juan A. Serrano Navarro', '30971425Q', 1, 2, 'Jornada continua', 'Búscamos 2 perfiles de alumnos:\n\n1. Integración de productos: tareas de creación y optimización de las fichas de producto para posicionarlas en Google. Sería importante que tenga conocimientos de SEO, si no es así nosotros se los aportaríamos.\n\n2. Programador: Muy positivo que tenga conocimientos en prestashop, en caso de tenerlos podría desarrollar módulos para implantarlos en la web. De no tener conocimientos en prestashop se dedicaría a la creación de herramientas que ayuden a la automatización de las tareas diarias.', 'Ambas tareas se desarrollaran sobre el ecommerce www.electrocosto.com. Hay una alta posibilidad de contratación.'),
@@ -727,16 +729,16 @@ CREATE TABLE `User` (
 --
 
 INSERT INTO `User` (`id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `salt`, `password`, `last_login`, `confirmation_token`, `password_requested_at`, `roles`, `first_name`, `last_name`, `to_distribute`, `img`, `current_convocatory`) VALUES
-(1, 'admin', 'admin', 'admin@admin.com', 'admin@admin.com', 1, NULL, '$2y$13$JkDEWVqov6Q8EU79EbGnROnXa09P4HyRezShaWeeeoHi6/vkj7vlK', '2018-11-11 10:51:19', NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 'admin', 'admin', 0, NULL, NULL),
-(2, 'lmagarin', 'lmagarin', 'lmagarin@gmail.com', 'lmagarin@gmail.com', 1, NULL, '$2y$13$X7U..87q2sjrwWEj9FBSJ.iswntdu03r342ZMajN4uoCW/cw9oTf6', '2018-11-11 10:55:25', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Lourdes', 'Magarin Corvillo', 1, 'lmagarin.jpeg', 2),
-(3, 'jrabasco', 'jrabasco', 'jaimeeducation@gmail.com', 'jaimeeducation@gmail.com', 1, NULL, '$2y$13$EuRwUcyC1nRv1VVZ.vif7.lYZNqhWNrDqnWFM9haJ43UJ8tY2KxYu', NULL, NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Jaime', 'Rabasco Ronda', 1, NULL, NULL),
-(4, 'fjaguilera', 'fjaguilera', 'fjagui@gmail.com', 'fjagui@gmail.com', 1, NULL, '$2y$13$h2orC2clTwzH.1gd8EiEJOSolTmPm5BbiWwPadxRlNNE3/1EAI1SS', NULL, NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Francisco José', 'Aguilera Ruiz', 1, NULL, NULL),
-(5, 'jralbendin', 'jralbendin', 'jralbendin@gmail.com', 'jralbendin@gmail.com', 1, NULL, '$2y$13$LHMg8YEiyEYCWj5iifZXmORABgx7gZ51Apk7q2jqXkkf1WSiiufOu', NULL, NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'José Ramón', 'Albendín Ramírez', 1, NULL, NULL),
-(6, 'rcastillo', 'rcastillo', 'rcastillo@iesgrancapitan.org', 'rcastillo@iesgrancapitan.org', 1, NULL, '$2y$13$yr.N7N1dcxp/OtJQYmDkTOTvO0n1gGygt78UMNJT21ovvlEhF/ghG', '2018-10-07 09:49:28', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Rafael', 'del Castillo Gomariz', 1, NULL, NULL),
-(7, 'aperez', 'aperez', 'apeflo@gmail.com', 'apeflo@gmail.com', 1, NULL, '$2y$13$LwYndFyzJkwc0PJi74DiEOgzuE8O3MLAZXU2efaeufjuGiOvyJ/RC', NULL, NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Amelia', 'Pérez Flores', 1, NULL, NULL),
-(8, 'mctripiana', 'mctripiana', 'mctripiana@gmail.com', 'mctripiana@gmail.com', 1, NULL, '$2y$13$/Iz1VgVDOenurAlHI24QVeSirZHyZE2/Vm0I4DzP2q2I4wKAekka2', NULL, NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Maria del Carmen', 'Tripiana', 1, NULL, NULL),
-(10, 'rlozano', 'rlozano', 'rlozano@gmail.com', 'rlozano@gmail.com', 1, NULL, '$2y$13$3rBzXD69OjkxYR9Ns4EzkOuGjMxuTtRIDNhu4rVQZghDx8t8qgGfO', NULL, NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Rafael', 'Lozano Luján', 1, NULL, NULL),
-(11, 'sinuhe', 'sinuhe', 'victorianosevillano@gmail.com', 'victorianosevillano@gmail.com', 1, NULL, '$2y$13$1sg3DXtbk4whwTRv54O78e/gg/C9DtW8zaGYjJrjzoxq/awOQbD6K', NULL, 'WZ3VO2kes91ZRZuV80g4bDrbyFvrZEwi7p0ljIDxcfg', '2018-11-04 10:24:39', 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'sinuhe', 'sinuhe', 0, NULL, NULL);
+(1, 'admin', 'admin', 'admin@admin.com', 'admin@admin.com', 1, NULL, '$2y$13$JkDEWVqov6Q8EU79EbGnROnXa09P4HyRezShaWeeeoHi6/vkj7vlK', '2018-11-20 20:23:57', NULL, NULL, 'a:1:{i:0;s:10:"ROLE_ADMIN";}', 'admin', 'admin', 0, 'admin.jpeg', NULL),
+(2, 'lmagarin', 'lmagarin', 'lmagarin@gmail.com', 'lmagarin@gmail.com', 1, NULL, '$2y$13$X7U..87q2sjrwWEj9FBSJ.iswntdu03r342ZMajN4uoCW/cw9oTf6', '2018-11-20 20:31:54', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Lourdes', 'Magarin Corvillo', 1, 'lmagarin.png', 2),
+(3, 'jrabasco', 'jrabasco', 'jaimeeducation@gmail.com', 'jaimeeducation@gmail.com', 1, NULL, '$2y$13$ZK/t15HBws3wnuUOibKm/ePQM1qPqQaVTnZYNBS7v2IXLNIiG7twK', '2018-11-20 20:14:52', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Jaime', 'Rabasco Ronda', 1, 'jrabasco.jpeg', 2),
+(4, 'fjaguilera', 'fjaguilera', 'fjagui@gmail.com', 'fjagui@gmail.com', 1, NULL, '$2y$13$SXFmJYUlQE0JXramHD7JjunAwnGPqjLxuVEhp5NxcIo0pRcj4t1EW', '2018-11-20 20:14:17', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Francisco José', 'Aguilera Ruiz', 1, 'fjaguilera.png', NULL),
+(5, 'jralbendin', 'jralbendin', 'jralbendin@gmail.com', 'jralbendin@gmail.com', 1, NULL, '$2y$13$5MWOssW8xywB3Ju2OQ2xkuf22YYnSZRmRPRVegc8Cosy.vsezREa6', '2018-11-20 20:15:51', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'José Ramón', 'Albendín Ramírez', 1, 'jralbendin.png', NULL),
+(6, 'rcastillo', 'rcastillo', 'rcastillo@iesgrancapitan.org', 'rcastillo@iesgrancapitan.org', 1, NULL, '$2y$13$yr.N7N1dcxp/OtJQYmDkTOTvO0n1gGygt78UMNJT21ovvlEhF/ghG', '2018-11-20 20:16:48', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Rafael', 'del Castillo Gomariz', 1, 'rcastillo.png', NULL),
+(7, 'aperez', 'aperez', 'apeflo@gmail.com', 'apeflo@gmail.com', 1, NULL, '$2y$13$1wxtRVZ0Ht9plHgM6rpzzuUrzXhZiP60NGdwS3vu0iTHv4c143npe', '2018-11-20 20:12:31', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Amelia', 'Pérez Flores', 1, 'aperez.png', NULL),
+(8, 'mctripiana', 'mctripiana', 'mctripiana@gmail.com', 'mctripiana@gmail.com', 1, NULL, '$2y$13$.NXztjRMCfoh3F/s6C5IAutmFx59lZ83WPgZZnp09Zp6rpEeVPt5y', '2018-11-20 20:16:18', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Maria del Carmen', 'Tripiana', 1, 'mctripiana.png', NULL),
+(10, 'rlozano', 'rlozano', 'rlozano@gmail.com', 'rlozano@gmail.com', 1, NULL, '$2y$13$yORd20ALa7vLyB43Pf1GWOsRs/04vWIfun589UNjKm7Dv8r5G2o6.', '2018-11-20 20:23:31', NULL, NULL, 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'Rafael', 'Lozano Luján', 1, 'rlozano.png', NULL),
+(11, 'sinuhe', 'sinuhe', 'sinuhe@gmail.com', 'sinuhe@gmail.com', 1, NULL, '$2y$13$Fa/D1CFXwVZBP6ViTOkCTOekfWZU.kDcW61AW.6AAgk9BMGFqOHue', NULL, 'WZ3VO2kes91ZRZuV80g4bDrbyFvrZEwi7p0ljIDxcfg', '2018-11-04 10:24:39', 'a:1:{i:0;s:12:"ROLE_TEACHER";}', 'sinuhe', 'sinuhe', 0, NULL, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -858,9 +860,9 @@ ALTER TABLE `Student`
 --
 ALTER TABLE `User`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_2DA1797792FC23A8` (`username_canonical`),
   ADD UNIQUE KEY `UNIQ_2DA17977A0D96FBF` (`email_canonical`),
-  ADD UNIQUE KEY `UNIQ_2DA17977C05FB297` (`confirmation_token`);
+  ADD UNIQUE KEY `UNIQ_2DA17977C05FB297` (`confirmation_token`),
+  ADD KEY `UNIQ_2DA1797792FC23A8` (`username_canonical`) USING BTREE;
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -870,7 +872,7 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT de la tabla `Company`
 --
 ALTER TABLE `Company`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT de la tabla `Convocatory`
 --
@@ -895,7 +897,7 @@ ALTER TABLE `Distribution_company`
 -- AUTO_INCREMENT de la tabla `Distribution_module_teacher`
 --
 ALTER TABLE `Distribution_module_teacher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT de la tabla `Distribution_project`
 --
@@ -910,7 +912,7 @@ ALTER TABLE `event_calendar`
 -- AUTO_INCREMENT de la tabla `Module`
 --
 ALTER TABLE `Module`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT de la tabla `Project`
 --

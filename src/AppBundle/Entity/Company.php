@@ -106,12 +106,12 @@ class Company
     private $type_of_work_day;
 
     /**
-     * @ORM\Column(name="tasks_to_be_done", type="string", nullable=true)
+     * @ORM\Column(name="tasks_to_be_done", type="text", nullable=true)
      */
     private $tasks_to_be_done;
 
     /**
-     * @ORM\Column(name="observations", type="string", nullable=true)
+     * @ORM\Column(name="observations", type="text", nullable=true)
      */
     private $observations;
 

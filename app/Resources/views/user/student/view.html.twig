@@ -105,7 +105,7 @@
            <!-- Fin bloque listar alumnos -->
         </div>
         <div id="solemp" class="col p-1 s12 ">
-            <form action="{{ path('user_fct_massive_request_company')}}" method="post">
+            <form action="{{ path('user_student_massive_request_student')}}" method="post">
                 <h5>Importación de alumnos</h5>
                 <div class="row">
                     <div class="col s12 right-align">
@@ -138,11 +138,11 @@
                     </thead>
                     <tbody>
 
-                    {% for request in request_companies %}
+                    {% for request in request_students %}
                         <tr>
-                            <td>{{ request.getNameCompany() }}</td>
-                            <td>{{ request.getCif() }}</td>
-                            <td>{{ request.getNumberOfDaw() + request.getNumberOfAsir() }}</td>
+                            <td>{{ request.getFirstName() }}</td>
+                            <td>{{ request.getLastName() }}</td>
+                            <td>{{ request.getLastName() }}</td>
                             <td>
                                 <label>
                                     <input type="checkbox" class="boxesSolc" name="solc[{{ request.getId() }}]" />
@@ -150,7 +150,7 @@
                                 </label>
                             </td>
                             <td>
-                                <a href="{{ path('user_student_show_request_student',{'id': request.getId()}) }}">
+                                <a href="{{ path('user_fct_show_request_company',{'id': request.getId()}) }}">
                                     <i class="small material-icons">info</i>
                                 </a>
                             </td>

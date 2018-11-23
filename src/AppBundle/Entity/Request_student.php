@@ -8,10 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Request_student
  *
- * @ORM\Table(name="Request_Student")
+ * @ORM\Table(name="Request_student")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Request_studentRepository")
  */
-class Request_Student
+class Request_student
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -33,8 +33,8 @@ class Request_Student
     private $last_name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="School_group", inversedBy="students_groups", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="group_id", type="integer", nullable=false)
      */
     private $group;
 
@@ -50,8 +50,8 @@ class Request_Student
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Convocatory", inversedBy="students")
-     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="convocatory_id", type="integer", nullable=false)
      */
     private $convocatory;
 
@@ -252,11 +252,11 @@ class Request_Student
     /**
      * Set groupId
      *
-     * @param \AppBundle\Entity\School_group $groupId
+     * @param integer $groupId
      *
      * @return Request_student
      */
-    public function setGroupId(\AppBundle\Entity\School_group $groupId)
+    public function setGroupId($groupId)
     {
         $this->group = $groupId;
 
@@ -266,33 +266,9 @@ class Request_Student
     /**
      * Get groupId
      *
-     * @return \AppBundle\Entity\School_group
+     * @return integer
      */
     public function getGroupId()
-    {
-        return $this->group;
-    }
-
-    /**
-     * Set group
-     *
-     * @param \AppBundle\Entity\School_group $group
-     *
-     * @return Request_student
-     */
-    public function setGroup(\AppBundle\Entity\School_group $group)
-    {
-        $this->group = $group;
-
-        return $this;
-    }
-
-    /**
-     * Get group
-     *
-     * @return \AppBundle\Entity\School_group
-     */
-    public function getGroup()
     {
         return $this->group;
     }
@@ -305,11 +281,11 @@ class Request_Student
     /**
      * Set convocatory
      *
-     * @param \AppBundle\Entity\Convocatory $convocatory
+     * @param integer $convocatory
      *
      * @return Request_student
      */
-    public function setConvocatory(\AppBundle\Entity\Convocatory $convocatory)
+    public function setConvocatory($convocatory)
     {
         $this->convocatory = $convocatory;
 
@@ -319,7 +295,7 @@ class Request_Student
     /**
      * Get convocatory
      *
-     * @return \AppBundle\Entity\Convocatory
+     * @return integer
      */
     public function getConvocatory()
     {

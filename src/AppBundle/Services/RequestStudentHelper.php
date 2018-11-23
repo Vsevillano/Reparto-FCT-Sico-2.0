@@ -3,9 +3,8 @@
 namespace AppBundle\Services;
 
 
-use AppBundle\Entity\Company;
+use AppBundle\Entity\Student;
 use AppBundle\Entity\Request_student;
-use AppBundle\Repository\CompanyRepository;
 use AppBundle\Repository\StudentRepository;
 use Doctrine\ORM\EntityManager;
 
@@ -18,11 +17,18 @@ class RequestStudentHelper
         $this->em = $em;
     }
 
-
     public function getRequest($id)
     {
         /** @var Request_student $requestStudent*/
         $requestStudent = $this->em->getRepository("AppBundle:Request_student");
         return $requestStudent->find($id);
+    }
+
+    public function getAllRequestStudents()
+    {
+        /** @var Request_studentRepository $studentsRepository */
+        $studentsRepository = $this->em->getRepository("AppBundle:Request_student");
+
+        return $studentsRepository->getAllStudents();
     }
 }

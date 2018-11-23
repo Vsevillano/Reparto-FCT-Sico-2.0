@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use AppBundle\Entity\Student;
 use AppBundle\Entity\Project;
+use AppBundle\Entity\School_group;
 use AppBundle\Entity\Request_student;
 use AppBundle\Form\ProjectType;
 use Doctrine\DBAL\DBALException;
@@ -55,7 +56,7 @@ class Request_studentController extends Controller
                 $file_entity = new UploadedFile ($path, $original_name);
 
                 $objReader = PHPExcel_IOFactory::createReader('Excel2007');
-                $objReader->setLoadSheetsOnly('Alumnos'); // Especificamos la hoja de cálculo
+                $objReader->setLoadSheetsOnly('Students'); // Especificamos la hoja de cálculo
                 $objPHPExcel = $objReader->canRead($file_entity);
 
                 if ($objPHPExcel) { //El archivo es válido
@@ -75,13 +76,13 @@ class Request_studentController extends Controller
                         }
                         try{
                             $request_student = new Request_student();
-                            $request_student->setNameCompany($cells[$i][0]);
-                            $request_student->setCif($cells[$i][1]);
-                            $request_student->setHeadquartersOfWork($cells[$i][2]);
-                            $request_student->setHeadquartersPrincipal($cells[$i][3]);
-                            $request_student->setContactPerson($cells[$i][4]);
+                            $request_student->setGroupId($cells[$i][0]);
+                            $request_student->setConvocatory($cells[$i][1]);
+                            $request_student->setFirstName($cells[$i][2]);
+                            $request_student->setLastName($cells[$i][3]);
+                            $request_student->setPiExento($cells[$i][4]);
+                            $request_student->setFctExento($cells[$i][5]);
                             
-
                             $entityManager->persist($request_student);
                             $entityManager->flush();
                         }catch (DBALException $e){
@@ -109,10 +110,23 @@ class Request_studentController extends Controller
             }
         }
         return $this->render('user/student/request_student/new.html.twig', array(
-            'title' => "Subir datos de alumnos",
+            'title' => "Importar datos de alumnos",
             'error' => $error,
         ));
     }
+
+    /**
+     * @Route("user/student/request_student/{id}/show", name="user_student_show_request_student", methods="GET")
+     */
+    public function showProject(Request_student $request_student)
+    {
+        $em = $this->getDoctrine();
+
+        return $this->render('user/student/request_student/show.html.twig', array(
+            'request_student' => $request_student,
+        ));
+    }
+
 
     /**
      * @Route("/user/student/requestStudent/massiveSelect", name="user_student_massive_request_student")
@@ -125,7 +139,7 @@ class Request_studentController extends Controller
                 ->getFlashBag()
                 ->add('error', 'Convocatoria antigua (Solo lectura)')
             ;
-            return $this->redirectToRoute('user_fct');
+            return $this->redirectToRoute('panel_students');
         }
 
         $type = 'success';
@@ -144,27 +158,27 @@ class Request_studentController extends Controller
             }else{
                 $em = $this->getDoctrine()->getManager();
                 foreach ($solicitudes as $key => $value){
-                    $request_company = $this->get('app.requestCompany')->getRequest($key);
-                    $newCompany = new Student();
-                    $newCompany->setName($request_company->getNameCompany());
-                    $newCompany->setCif($request_company->getCif());
-                    $newCompany->setPhone($request_company->getPhone());
-                    $newCompany->setEmail($request_company->getEmail());
-                    $newCompany->setSchoolYear($request_company->getSchoolYear());
-     
+                    $request_student = $this->get('app.requestStudent')->getRequest($key);
+                    $newStudent = new Student();
+                    $newStudent->setGroupId($request_student->getGroupId());
+                    $newStudent->setConvocatory($request_student->getConvocatory());
+                    $newStudent->setFirstName($request_student->getFirstName());
+                    $newStudent->setLastName($request_student->getLastName());
+                    $newStudent->setPiExento($request_student->getPiExento());
+                    $newStudent->setFctExento($request_student->getFctExento());
 
                     try{
                         $validator = $this->get('validator');
-                        $errorCode = $validator->validate($newCompany)->getIterator();
+                        $errorCode = $validator->validate($newStudent)->getIterator();
                         if(!isset($errorCode[0]) || $errorCode[0]->getCode() != '23bd9dbf-6b9b-41cd-a99e-4844bcf3077f'){
-                            $em->persist($newCompany);
+                            $em->persist($newStudent);
                             $em->flush();
 
-                            $em->remove($request_company);
+                            $em->remove($request_student);
                             $em->flush();
 
                         }else{
-                            $msg = 'Ya existe '.$newCompany->getName();
+                            $msg = 'Ya existe '.$newStudent->getName();
                             $request->getSession()
                                 ->getFlashBag()
                                 ->add('error', $msg)
@@ -185,7 +199,7 @@ class Request_studentController extends Controller
                 }
                 if($numerrors > 0 && $numerrors == count($solicitudes)){ // No se ha creado ninguna empresa
                     $type = 'error';
-                    $msg = 'No se ha creado ninguna empresa';
+                    $msg = 'No se ha creado ningun alumno';
                 }else{
                     $type = 'success';
                     $msg = 'Se ha creado '. (count($solicitudes) - $numerrors) .' de '. count($solicitudes);
@@ -197,14 +211,14 @@ class Request_studentController extends Controller
 
             if(!$solicitudes){
                 $type = 'error';
-                $msg = 'Solicitudes no seleccionadas';
+                $msg = 'Alumnos no seleccionados';
             }else{
                 foreach ($solicitudes as $key => $value){
-                    $request_company = $this->get('app.requestCompany')->getRequest($key);
+                    $request_student = $this->get('app.requestStudent')->getRequest($key);
 
                     try{
                         $em = $this->getDoctrine()->getManager();
-                        $em->remove($request_company);
+                        $em->remove($request_student);
                         $em->flush();
                         $msg = 'Solicitudes borradas';
                     }catch (DBALException $e){
@@ -242,6 +256,6 @@ class Request_studentController extends Controller
             ->add($type, $msg)
         ;
 
-        return $this->redirectToRoute('user_fct', ['_fragment' => 'solemp']);
+        return $this->redirectToRoute('panel_students', ['_fragment' => 'solemp']);
     }
 }

@@ -132,11 +132,10 @@ class Request_companyController extends Controller
     {
         $em = $this->getDoctrine();
 
-        return $this->render('user/fct/request_company/show.html.twig', array(
+        return $this->render('user/student/request_student/show.html.twig', array(
             'request_company' => $request_company,
         ));
     }
-
 
 
     /**

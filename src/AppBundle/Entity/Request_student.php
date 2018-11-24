@@ -33,8 +33,8 @@ class Request_student
     private $last_name;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="group_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="School_group", inversedBy="students_groups", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $group;
 
@@ -50,8 +50,8 @@ class Request_student
 
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="convocatory_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Convocatory", inversedBy="request_students")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $convocatory;
 
@@ -171,8 +171,6 @@ class Request_student
         return $this;
     }
 
-    
-
     /**
      * Constructor
      */
@@ -252,11 +250,11 @@ class Request_student
     /**
      * Set groupId
      *
-     * @param integer $groupId
+     * @param \AppBundle\Entity\School_group $groupId
      *
      * @return Request_student
      */
-    public function setGroupId($groupId)
+    public function setGroupId(\AppBundle\Entity\School_group $groupId)
     {
         $this->group = $groupId;
 
@@ -266,9 +264,33 @@ class Request_student
     /**
      * Get groupId
      *
-     * @return integer
+     * @return \AppBundle\Entity\School_group
      */
     public function getGroupId()
+    {
+        return $this->group;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \AppBundle\Entity\School_group $group
+     *
+     * @return Request_student
+     */
+    public function setGroup(\AppBundle\Entity\School_group $group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \AppBundle\Entity\School_group
+     */
+    public function getGroup()
     {
         return $this->group;
     }
@@ -281,7 +303,7 @@ class Request_student
     /**
      * Set convocatory
      *
-     * @param integer $convocatory
+     * @param \AppBundle\Entity\Convocatory $convocatory
      *
      * @return Request_student
      */
@@ -295,10 +317,11 @@ class Request_student
     /**
      * Get convocatory
      *
-     * @return integer
+     * @return \AppBundle\Entity\Convocatory
      */
     public function getConvocatory()
     {
         return $this->convocatory;
     }
+
 }

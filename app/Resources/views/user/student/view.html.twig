@@ -127,13 +127,13 @@
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Ciclo</th>
+                        <th>Convocatoria</th>
                         <th class="centerCheckboxTH">Seleccionados
                             <label>
                                 <input type="checkbox" id="boxSolcAll"/>
                                 <span></span>
                             </label>
                         </th>
-                        <th>Más info</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -142,17 +142,13 @@
                         <tr>
                             <td>{{ request.getFirstName() }}</td>
                             <td>{{ request.getLastName() }}</td>
-                            <td>{{ request.getLastName() }}</td>
+                            <td>{{ request.getGroupId() }}</td>
+                            <td>{{ request.getConvocatory() }}</td>
                             <td>
                                 <label>
                                     <input type="checkbox" class="boxesSolc" name="solc[{{ request.getId() }}]" />
                                     <span></span>
                                 </label>
-                            </td>
-                            <td>
-                                <a href="{{ path('user_fct_show_request_company',{'id': request.getId()}) }}">
-                                    <i class="small material-icons">info</i>
-                                </a>
                             </td>
                         </tr>
                     {% endfor %}

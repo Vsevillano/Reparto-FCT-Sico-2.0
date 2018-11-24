@@ -8,6 +8,8 @@ use AppBundle\Entity\Student;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\School_group;
 use AppBundle\Entity\Request_student;
+use AppBundle\Services\ConvocatoriesHelper;
+use AppBundle\Services\StudentsHelper;
 use AppBundle\Form\ProjectType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
@@ -68,16 +70,40 @@ class Request_studentController extends Controller
                     $entityManager = $this->getDoctrine()->getManager();
                     $emCov = $entityManager->getRepository('AppBundle:Convocatory');
                     $currentConvocatory = $this->getUser()->getCurrentConvocatory();
-                    $currentYear = $emCov->find($currentConvocatory)->getSchoolYear();
+                    $currentYear = $emCov->find($currentConvocatory)->getIdSchoolYear();
 
                     for ($i = 1; $i < $worksheet->getHighestRow(); $i++) {
                         if ($cells[$i][0] == null) {
                             break;
                         }
                         try{
+                            $groups = array();
+                            $convocatories = array();
+
+                            /** @var SchoolGroupsHelper $schoolGroupsHelper */
+                            $schoolGroupsHelper = $this->get('app.schoolGroupsHelper');
+
+                            /** @var ConvocatoriesHelper $convocatoriesHelper */
+                            $convocatoriesHelper = $this->get('app.convocatoriesHelper');
+
+
+                            /** @var School_group $group */
+                            foreach ($schoolGroupsHelper->getGroupsCourse(2) as $group) {
+                                $groups[$group->__toString()] = $group;
+                            }
+
+                            /** @var Convocatory $convocatory */
+                            foreach ($convocatoriesHelper->getAllConvocatories() as $convocatory) {
+                                if($current_convocatory == $convocatory->getId())
+                                    $convocatories[$convocatory->__toString()] = $convocatory;
+                                else 
+                                    $convocatories[$convocatory->__toString()] = $convocatory;
+
+                            }                                              
+                            
                             $request_student = new Request_student();
-                            $request_student->setGroupId($cells[$i][0]);
-                            $request_student->setConvocatory($cells[$i][1]);
+                            $request_student->setGroupId($groups[$group->__toString()]);
+                            $request_student->setConvocatory($convocatories[$convocatory->__toString()]);
                             $request_student->setFirstName($cells[$i][2]);
                             $request_student->setLastName($cells[$i][3]);
                             $request_student->setPiExento($cells[$i][4]);
@@ -159,6 +185,7 @@ class Request_studentController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 foreach ($solicitudes as $key => $value){
                     $request_student = $this->get('app.requestStudent')->getRequest($key);
+                    
                     $newStudent = new Student();
                     $newStudent->setGroupId($request_student->getGroupId());
                     $newStudent->setConvocatory($request_student->getConvocatory());

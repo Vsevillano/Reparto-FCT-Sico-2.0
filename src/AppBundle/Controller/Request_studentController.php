@@ -78,6 +78,9 @@ class Request_studentController extends Controller
                             break;
                         }
                         try{
+                            $entityManager = $this->getDoctrine()->getManager();
+                            $emCov = $entityManager->getRepository('AppBundle:Convocatory');
+                            $currentConvocatory = $this->getUser()->getCurrentConvocatory();
                             $request_student = new Request_student();
 
                             $groups = array();
@@ -99,17 +102,17 @@ class Request_studentController extends Controller
 
                             /** @var Convocatory $convocatory */
                             foreach ($convocatoriesHelper->getAllConvocatories() as $convocatory) {
-                                if($cells[$i][1] == $convocatory->getId()) {
+                                if($currentConvocatory == $convocatory->getId()) {
                                     $convocatories[$convocatory->__toString()] = $convocatory;
                                     $request_student->setConvocatory($convocatories[$convocatory->__toString()]);
                                 }
                                 
                             }                                              
                             
-                            $request_student->setFirstName($cells[$i][2]);
-                            $request_student->setLastName($cells[$i][3]);
-                            $request_student->setPiExento($cells[$i][4]);
-                            $request_student->setFctExento($cells[$i][5]);
+                            $request_student->setFirstName($cells[$i][1]);
+                            $request_student->setLastName($cells[$i][2]);
+                            $request_student->setPiExento($cells[$i][3]);
+                            $request_student->setFctExento($cells[$i][4]);
                             
                             $entityManager->persist($request_student);
                             $entityManager->flush();

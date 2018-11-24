@@ -10,6 +10,7 @@ use AppBundle\Entity\School_group;
 use AppBundle\Entity\Request_student;
 use AppBundle\Services\ConvocatoriesHelper;
 use AppBundle\Services\StudentsHelper;
+use AppBundle\Services\SchoolGroupsHelper;
 use AppBundle\Form\ProjectType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
@@ -77,6 +78,8 @@ class Request_studentController extends Controller
                             break;
                         }
                         try{
+                            $request_student = new Request_student();
+
                             $groups = array();
                             $convocatories = array();
 
@@ -86,24 +89,23 @@ class Request_studentController extends Controller
                             /** @var ConvocatoriesHelper $convocatoriesHelper */
                             $convocatoriesHelper = $this->get('app.convocatoriesHelper');
 
-
                             /** @var School_group $group */
                             foreach ($schoolGroupsHelper->getGroupsCourse(2) as $group) {
-                                $groups[$group->__toString()] = $group;
+                                if($cells[$i][0] == $group->getId()) {
+                                    $groups[$group->__toString()] = $group;
+                                    $request_student->setGroupId($groups[$group->__toString()]);
+                                }
                             }
 
                             /** @var Convocatory $convocatory */
                             foreach ($convocatoriesHelper->getAllConvocatories() as $convocatory) {
-                                if($current_convocatory == $convocatory->getId())
+                                if($cells[$i][1] == $convocatory->getId()) {
                                     $convocatories[$convocatory->__toString()] = $convocatory;
-                                else 
-                                    $convocatories[$convocatory->__toString()] = $convocatory;
-
+                                    $request_student->setConvocatory($convocatories[$convocatory->__toString()]);
+                                }
+                                
                             }                                              
                             
-                            $request_student = new Request_student();
-                            $request_student->setGroupId($groups[$group->__toString()]);
-                            $request_student->setConvocatory($convocatories[$convocatory->__toString()]);
                             $request_student->setFirstName($cells[$i][2]);
                             $request_student->setLastName($cells[$i][3]);
                             $request_student->setPiExento($cells[$i][4]);

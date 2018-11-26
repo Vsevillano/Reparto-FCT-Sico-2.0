@@ -11,6 +11,7 @@ use AppBundle\Entity\Request_student;
 use AppBundle\Services\ConvocatoriesHelper;
 use AppBundle\Services\StudentsHelper;
 use AppBundle\Services\SchoolGroupsHelper;
+use AppBundle\Services\CyclesHelper;
 use AppBundle\Form\ProjectType;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
@@ -42,6 +43,19 @@ class Request_studentController extends Controller
             return $this->redirectToRoute('panel_students');
         }
 
+        $groups = array();
+
+        /** @var CyclesHelper $cyclesHelper */
+        $cyclesHelper = $this->get('app.cyclesHelper');
+
+        /** @var SchoolGroupsHelper $schoolGroupsHelper */
+        $schoolGroupsHelper = $this->get('app.schoolGroupsHelper');
+
+        /** @var School_group $group */
+        foreach ($schoolGroupsHelper->getGroupsCourse(2) as $group) {
+            $groups[$group->__toString()] = $group;
+        }
+
         $btn_submit = $request->get('btn_submit');
         $file = $request->files->get('file_uploaded');
 
@@ -51,6 +65,7 @@ class Request_studentController extends Controller
             if(isset($file)) {
                 $routeDirectory = '../web/uploads/assets';
                 $file = $request->files->get('file_uploaded');
+                $cycle = $request->get('selectCycleStudent');
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
                 $original_name = $file->getClientOriginalName();
                 $file->move($routeDirectory, $fileName);
@@ -94,7 +109,7 @@ class Request_studentController extends Controller
 
                             /** @var School_group $group */
                             foreach ($schoolGroupsHelper->getGroupsCourse(2) as $group) {
-                                if($cells[$i][0] == $group->getId()) {
+                                if($cycle == $group->getId()) {
                                     $groups[$group->__toString()] = $group;
                                     $request_student->setGroupId($groups[$group->__toString()]);
                                 }
@@ -105,14 +120,14 @@ class Request_studentController extends Controller
                                 if($currentConvocatory == $convocatory->getId()) {
                                     $convocatories[$convocatory->__toString()] = $convocatory;
                                     $request_student->setConvocatory($convocatories[$convocatory->__toString()]);
-                                }
-                                
-                            }                                              
+                                }   
+                            }
                             
-                            $request_student->setFirstName($cells[$i][1]);
-                            $request_student->setLastName($cells[$i][2]);
-                            $request_student->setPiExento($cells[$i][3]);
-                            $request_student->setFctExento($cells[$i][4]);
+                            $nombre = explode(',', $cells[$i][0]);
+                            $request_student->setFirstName($nombre[1]);
+                            $request_student->setLastName($nombre[0]);
+                            $request_student->setPiExento(0);
+                            $request_student->setFctExento(0);
                             
                             $entityManager->persist($request_student);
                             $entityManager->flush();
@@ -143,6 +158,8 @@ class Request_studentController extends Controller
         return $this->render('user/student/request_student/new.html.twig', array(
             'title' => "Importar datos de alumnos",
             'error' => $error,
+            'groups' => $groups,
+            
         ));
     }
 

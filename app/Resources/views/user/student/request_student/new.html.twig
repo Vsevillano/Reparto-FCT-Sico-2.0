@@ -11,7 +11,7 @@
             <select name="selectGroupDistribution" id="selectGroupDistribution">
             <option value="todos">- Elija grupo -</option>
             {% for group in groups %}
-                <option value="{{ group.id }}">{{ group.id }}</option>
+                <option value="{{ group.id }}">{{ group.__toString() }}</option>
             {% endfor %}
         </select>
             <br>

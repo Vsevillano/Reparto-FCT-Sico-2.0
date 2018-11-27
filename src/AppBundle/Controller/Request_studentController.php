@@ -115,11 +115,11 @@ class Request_studentController extends Controller
 
                             /** @var School_group $group */
                             foreach ($schoolGroupsHelper->getGroupsCourse(2) as $group) {
-                                if($group->getId() == 3) {
+                                if($group->getId() == '3') {
                                     $groups[$group->__toString()] = $group;
                                     $request_student->setGroupId($groups[$group->__toString()]);
                                 }
-                                else {
+                                else if($group->getId() == '4') {
                                     $groups[$group->__toString()] = $group;
                                     $request_student->setGroupId($groups[$group->__toString()]);
                                 }

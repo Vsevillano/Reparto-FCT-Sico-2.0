@@ -56,6 +56,12 @@ class Request_studentController extends Controller
             $groups[$group->__toString()] = $group;
         }
 
+        /** @var SchoolGroupsHelper $groupHelper */
+        $groupHelper = $this->get('app.schoolGroupsHelper');
+
+        /** @var CyclesHelper $cyclesHelper */
+        $cyclesHelper = $this->get('app.cyclesHelper');
+
         $btn_submit = $request->get('btn_submit');
         $file = $request->files->get('file_uploaded');
 
@@ -65,7 +71,8 @@ class Request_studentController extends Controller
             if(isset($file)) {
                 $routeDirectory = '../web/uploads/assets';
                 $file = $request->files->get('file_uploaded');
-                $cycle = $request->get('selectCycleStudent');
+            
+                $cycle =  $request->request->get('selectGroupDistribution');
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
                 $original_name = $file->getClientOriginalName();
                 $file->move($routeDirectory, $fileName);
@@ -86,7 +93,6 @@ class Request_studentController extends Controller
                     $entityManager = $this->getDoctrine()->getManager();
                     $emCov = $entityManager->getRepository('AppBundle:Convocatory');
                     $currentConvocatory = $this->getUser()->getCurrentConvocatory();
-                    $currentYear = $emCov->find($currentConvocatory)->getIdSchoolYear();
 
                     for ($i = 1; $i < $worksheet->getHighestRow(); $i++) {
                         if ($cells[$i][0] == null) {
@@ -96,6 +102,7 @@ class Request_studentController extends Controller
                             $entityManager = $this->getDoctrine()->getManager();
                             $emCov = $entityManager->getRepository('AppBundle:Convocatory');
                             $currentConvocatory = $this->getUser()->getCurrentConvocatory();
+                            
                             $request_student = new Request_student();
 
                             $groups = array();
@@ -109,10 +116,11 @@ class Request_studentController extends Controller
 
                             /** @var School_group $group */
                             foreach ($schoolGroupsHelper->getGroupsCourse(2) as $group) {
-                                if($cycle == $group->getId()) {
+                                if($group->getId() == $cycle) {
                                     $groups[$group->__toString()] = $group;
                                     $request_student->setGroupId($groups[$group->__toString()]);
                                 }
+                                
                             }
 
                             /** @var Convocatory $convocatory */
@@ -158,8 +166,9 @@ class Request_studentController extends Controller
         return $this->render('user/student/request_student/new.html.twig', array(
             'title' => "Importar datos de alumnos",
             'error' => $error,
-            'groups' => $groups,
-            
+            'cycles' => $cyclesHelper->getCycles(), 
+            'groups' => $groupHelper->getGroupsCourse(2)
+       
         ));
     }
 

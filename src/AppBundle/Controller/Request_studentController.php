@@ -269,7 +269,7 @@ class Request_studentController extends Controller
                         $em = $this->getDoctrine()->getManager();
                         $em->remove($request_student);
                         $em->flush();
-                        $msg = 'Solicitudes borradas';
+                        $msg = 'Datos de importación borrados';
                     }catch (DBALException $e){
                         $numerrors++;
                         switch ($e->getPrevious()->errorInfo[1]){

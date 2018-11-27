@@ -35,13 +35,13 @@ class Request_studentController extends Controller
     public function newRequestStudentAction(Request $request)
     {
         $current_convocatory = $this->getUser()->getCurrentConvocatory();
-        if(!$this->get('app.functionsHelper')->isConvocatoryValid($current_convocatory)) {
-            $request->getSession()
-                ->getFlashBag()
-                ->add('error', 'Convocatoria antigua (Solo lectura)')
-            ;
-            return $this->redirectToRoute('panel_students');
-        }
+        //if(!$this->get('app.functionsHelper')->isConvocatoryValid($current_convocatory)) {
+            //$request->getSession()
+                //->getFlashBag()
+                //->add('error', 'Convocatoria antigua (Solo lectura)')
+            //;
+            //return $this->redirectToRoute('panel_students');
+        //}
 
         $groups = array();
 
@@ -191,13 +191,13 @@ class Request_studentController extends Controller
     public function massiveAction(Request $request)
     {
         $current_convocatory = $this->getUser()->getCurrentConvocatory();
-        if(!$this->get('app.functionsHelper')->isConvocatoryValid($current_convocatory)) {
-            $request->getSession()
-                ->getFlashBag()
-                ->add('error', 'Convocatoria antigua (Solo lectura)')
-            ;
-            return $this->redirectToRoute('panel_students');
-        }
+        //if(!$this->get('app.functionsHelper')->isConvocatoryValid($current_convocatory)) {
+            //$request->getSession()
+                //->getFlashBag()
+                //->add('error', 'Convocatoria antigua (Solo lectura)')
+            //;
+            //return $this->redirectToRoute('panel_students');
+        //}
 
         $type = 'success';
         $msg = "";

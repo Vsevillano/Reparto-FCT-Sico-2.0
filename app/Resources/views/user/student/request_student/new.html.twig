@@ -8,16 +8,12 @@
         </a>
         <form method="POST" action="{{ path('user_student_reqcom') }}" enctype="multipart/form-data">
             <label for="ciclo">Ciclo</label>
-            <select name="selectCycleStudent" id="selectCycleStudent">
-                {% for group in groups %}
-                    {% if group.id == '3' %}
-                        <option value="{{ group.id }}">DAW</option>
-                    {% endif %}
-                    {% if group.id == '4' %}
-                        <option value="{{ group.id }}">ASIR</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
+            <select name="selectGroupDistribution" id="selectGroupDistribution">
+            <option value="todos">- Elija grupo -</option>
+            {% for group in groups %}
+                <option value="{{ group.id }}">{{ group.id }}</option>
+            {% endfor %}
+        </select>
             <br>
             <label for="email">Datos de alumnos a subir</label>
             <div class="file-field input-field">

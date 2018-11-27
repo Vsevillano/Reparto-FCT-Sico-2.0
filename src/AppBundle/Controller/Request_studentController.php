@@ -71,7 +71,8 @@ class Request_studentController extends Controller
             if(isset($file)) {
                 $routeDirectory = '../web/uploads/assets';
                 $file = $request->files->get('file_uploaded');
-                $cycle = $request->get('selectCycleStudent');
+            
+                $cycle =  $request->request->get('selectGroupDistribution');
                 $fileName = md5(uniqid()) . '.' . $file->guessExtension();
                 $original_name = $file->getClientOriginalName();
                 $file->move($routeDirectory, $fileName);
@@ -115,14 +116,11 @@ class Request_studentController extends Controller
 
                             /** @var School_group $group */
                             foreach ($schoolGroupsHelper->getGroupsCourse(2) as $group) {
-                                if($group->getId() == '3') {
+                                if($group->getId() == $cycle) {
                                     $groups[$group->__toString()] = $group;
                                     $request_student->setGroupId($groups[$group->__toString()]);
                                 }
-                                else if($group->getId() == '4') {
-                                    $groups[$group->__toString()] = $group;
-                                    $request_student->setGroupId($groups[$group->__toString()]);
-                                }
+                                
                             }
 
                             /** @var Convocatory $convocatory */

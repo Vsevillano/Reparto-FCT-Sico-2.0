@@ -61,7 +61,7 @@
     - `git init`
 
 3. Añadir la url del repositorio remoto:
-    - `git remote add origin https://github.com/iesgrancapitan-proyectos/201718daw-junio-reparto-sico-reparto-sico.git`
+    - `git remote add origin https://github.com/iesgrancapitan-proyectos/201819daw-diciembre-reparto-2-0-reparto2-0.git`
 
 4. Descargarse el proyecto:
     - `git pull origin master`

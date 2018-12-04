@@ -46,6 +46,13 @@ class DistributionModuleTeacherType extends AbstractType
                 'data' => $options["course_selected"]
             ))
             ->add('save', SubmitType::class, array('label' => 'Aceptar', 'attr' => ['class' => 'btn waves-effect waves-light w-100']));
+
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $form = $event->getForm();
+                $form->add('save', SubmitType::class, array('label' => 'Aceptar', 'attr' => ['class' => 'btn waves-effect waves-light w-100']));
+
+                     
+            });
     }
 
     public function configureOptions(OptionsResolver $resolver)

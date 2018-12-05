@@ -227,6 +227,10 @@ class UsersHelper
             $sum += $this->calcSumPonderation($numFCT, $numPI);
         }
 
+        if ($sum==0) {
+            $sum=1;
+        }
+
         return $sum;
     }
 

@@ -61,7 +61,7 @@
     - `git init`
 
 3. Añadir la url del repositorio remoto:
-    - `git remote add origin https://github.com/iesgrancapitan-proyectos/201718daw-junio-reparto-sico-reparto-sico.git`
+    - `git remote add origin https://github.com/iesgrancapitan-proyectos/201819daw-diciembre-reparto-2-0-reparto2-0.git`
 
 4. Descargarse el proyecto:
     - `git pull origin master`
@@ -80,6 +80,8 @@
      mailer_user: #{correo que se vaya a usar}
      mailer_password: #{contraseña del correo}
      session_max_idle_time: 1800
+     
+El correo introducido en este apartado sera el que realice los envíos a los profesores con la información de usuario y contraseña.
 
 7. Ejecutar lo siguiente para borrar la caché almacenada, dar permisos y actualizar la base de datos
     - `php bin/console d:g:entities AppBundle`
@@ -95,9 +97,5 @@
 1. Descargar ultimos cambios del repositorio
     - `git pull origin master`
     - `composer install`
-    - Añadimos de nuevo en el archivo `parameters.yml`, la siguiente línea:
-    ```yaml
-     session_max_idle_time: 1800
-    ```
     - `php bin/console d:g:entities AppBundle`
     - `sh scripts/deploy.sh`

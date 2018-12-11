@@ -1,5 +1,5 @@
 {% extends 'panel/base.html.twig' %}
-{% block title %}SICO: Módulos-profesor{% endblock %}
+{% block title %}Reparto: Módulos-profesor{% endblock %}
 
 {% set class = "" %}
 
@@ -12,6 +12,7 @@
 {% block body %}
     <h2>Gestión de curso/módulo/profesor</h2>
     <a href="{{ path('new_distribution_module_teacher') }}" class="waves-effect waves-light btn">Crear asignación</a>
+    </br>
     <div id="containerSelectConvocatoryStudent">
         <select name="" id="selectGroupDistribution">
             <option value="todos">- Elija grupo -</option>
@@ -27,6 +28,10 @@
             {% endfor %}
         </select>
     </div>
+    <p style="
+    float: right;
+    margin-right: 10px;
+    font-size: 1.5rem;">Filtro: </p>
     <table class=" responsive-table z-depth-1 centered mt-2">
         <thead>
         <tr>
@@ -284,9 +289,10 @@
             };
 
             $(function () {
+                
                 $("#selectCourseDistribution").on("change", changeData);
                 $("#selectGroupDistribution").on("change", changeCourse);
-
+                $("#selectGroupDistribution").trigger('change');
                 resumenHoras = $("#resumenHoras");
                 resumenHorasDesdoble = $("#resumenHorasDesdoble");
 

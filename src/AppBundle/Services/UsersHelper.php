@@ -94,16 +94,18 @@ class UsersHelper
                 );
                 $porc2 = $this->calcPorc2(
                     $distributionRepository->getHours2ByUserId($teacher->getId(), $currentYear),
-                    $distributionRepository->getHours2()
+                    $distributionRepository->getHours2($currentYear)
                 );
                 $porcCycle = $this->calcPorcCycle(
                     $distributionRepository->getHoursByUserId($teacher->getId(), $currentYear),
                     $cycleRepository->getHours()
                 );
+
                 $porcReduct = $this->calcPorcReduct(
                     $reduct,
                     $this->sumTotalReduct($teacherResult, $distributionRepository, $currentYear)
                 );
+
                 $ideal2 = ($sumTotalPond * $porc2) / 100;
                 $idealCycle = ($sumTotalPond * $porcCycle) / 100;
                 $idealReduct = ($sumTotalPond * $porcReduct) / 100;
@@ -153,7 +155,7 @@ class UsersHelper
     {
         $sum = 0;
         foreach ($teachers as $teacher) {
-            $sum += $this->calcReduction($distributionRepository->getHoursByUserId(
+            $sum += $this->calcReduction($distributionRepository->getHours2ByUserId(
                 $teacher->getId(),
                 $schoolYear
             ));
@@ -225,6 +227,10 @@ class UsersHelper
             $numFCT = $teacherRepository->getFCTDistribution($convocatory, $teacher->getId());
             $numPI = $teacherRepository->getPIDistribution($convocatory, $teacher->getId());
             $sum += $this->calcSumPonderation($numFCT, $numPI);
+        }
+
+        if ($sum==0) {
+            $sum=1;
         }
 
         return $sum;
